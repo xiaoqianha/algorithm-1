@@ -1,0 +1,12 @@
+vector<vector<double>> glass(101, vector<double>(101, 0));
+	glass[0][0]=poured;
+	for(int i=0;i<=query_row;i++)
+		for(int j=0;j<=i;j++)
+		{
+			if(glass[i][j]>1)
+			{
+				glass[i+1][j]+=(glass[i][j]-1)/2.0;
+				glass[i+1][j+1]+=(glass[i][j]-1)/2.0;
+			}
+		}
+	return min(1.0,glass[query_row][query_glass]);
