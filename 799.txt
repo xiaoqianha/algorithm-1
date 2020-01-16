@@ -1,0 +1,23 @@
+class Solution {
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        double[][] Tower = new double[100][100];//dp递推
+        Tower[0][0] = (double) poured;//给开始赋初值为总杯数
+        for (int i = 0; i <= query_row; i++) {
+            //行数的赋值
+            for (int j = 0; j <= i; j++) {
+                //每行杯数量是列的数量（全部遍历）
+               double d = (Tower[i][j] - 1.0) / 2.0;
+                //减去顶上的那杯容量1，每次分一半到下边
+                if (d > 0) {
+//如果前面的杯子有香槟了才递推放后面去
+                    Tower[i+1][j] += d;
+//如果溢出下面那个和下面旁边那个分配均分的
+                    Tower[i+1][j+1] += d;
+                }
+//每次分，直到分到最后一层，找最后的那个杯子的容量（dp就是取最后一个的值）
+            }
+        }
+
+        return Math.min(1, Tower[query_row][query_glass]);//看它有没有溢出，溢出了就只剩1（杯子最大容量为1）
+    }
+}

@@ -1,0 +1,21 @@
+class Solution {
+    /*
+求穿过最少的,可以是它的贴墙最多的，因此要右边界贴在这条线上的砖最多，那么我们只需要统计每一块砖的右边界对应的直线，数量最多的就是我们需要的，而计算每一块砖的右边界，其实就是一个前缀和，所以我们用一个变量sum去维护每一行的前缀和，然后再用一个map做统计就可以了,x = 0和右边缘不能算.
+*/
+    public int leastBricks(List<List<Integer>> wall) {
+        Map<Integer, Integer> h = new HashMap<>();
+        //做个哈希表
+        int max = -1;
+        for (List<Integer> list: wall) {//迭代循环wall中的不等长数组
+            //
+            int sum = 0;
+            for (int i = 0; i < list.size() - 1; i++) {
+                sum += list.get(i);//累加每行的每个元素去统计右边界
+                int count = h.getOrDefault(sum, 0) + 1;//返回指定键映射到的值，如果此映射不包含sum，则返回0
+                h.put(sum, count);//把右边的映射起来，sum里的值存count
+                max = Math.max(max, count);//找到存的最多的和线贴着的墙砖
+            }
+        }
+        return wall.size() - max;//把最多贴着线的墙砖减去，剩下的就是最少的线穿过的墙砖
+    }
+}
