@@ -1,0 +1,36 @@
+class Solution {
+    public List<String> addOperators(String num, int target) {
+        List<String> res = new ArrayList<>();//用列表来接收最后的结果并返回
+        if (num == null || num.length() == 0) {//如果字符串没有或者是空字符就没必要运算了
+            return res;
+        }
+        //用dfs来遍历 
+        dfs(num, target, 0,        0,           0,    "", res);
+		//字符串  目标 表达式结果   前一次的结果   位置 存表达式
+        return res;
+    }
+    
+    private void dfs(String num, int target, long curRes, long diff, int start, String curExp, List<String> res) {
+        if (start == num.length() && (long)target == curRes) {
+            res.add(new String(curExp));
+        }//如果每次dfs后得到的start 到了最后一个了并且结果又等于目标
+        
+        for (int i = start; i < num.length(); i++) {//从上次取出的数字后面开始遍历，避免发生重复
+            String cur = num.substring(start, i + 1);//取出其中的一位
+            if (cur.length() > 1 && cur.charAt(0) == '0') {
+                break;
+            }//如果取出来数了然后是01这种不存在的数，出去，重来
+            
+            if (curExp.length() > 0) {//可以进行*+-操作的数  ，按提供的*+-顺序来，不然会错              
+                dfs(num, target, (curRes - diff) + diff * 
+Long.valueOf(cur), diff * Long.valueOf(cur),
+                   i + 1, curExp + "*" + cur, res);
+                //字符串不动，目标不动，Long.valueOf(cur)字符串变成数字，自己变成前面的值diff与自己的乘积
+                dfs(num, target, curRes + Long.valueOf(cur), Long.valueOf(cur), i + 1, curExp + "+" + cur, res);//自己不变，i都得往后走
+                dfs(num, target, curRes - Long.valueOf(cur), -Long.valueOf(cur), i + 1, curExp + "-" + cur, res);//-就自己变成负数
+            } else {
+                dfs(num, target, Long.valueOf(cur), Long.valueOf(cur), i + 1, cur, res);//表达式的没有，就往后遍历
+            }
+        }
+    }
+}
