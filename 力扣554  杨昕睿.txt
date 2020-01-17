@@ -1,0 +1,19 @@
+int m=wall.size();
+        unordered_map<int,int> tmp;
+        for(int i=0;i<m;i++)
+        {
+            int sum=0;
+            int n=wall[i].size();
+            for(int j=0;j<n-1;j++)
+            {
+                sum+=wall[i][j];
+                tmp[sum]++;
+            }
+        }
+        int cc=0;
+        unordered_map<int,int>::iterator it;
+        for(it=tmp.begin();it!=tmp.end();it++)
+        {
+            cc=max(cc,it->second);
+        }  
+        return m-cc; 
