@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        string s1="";
+        stack<int>nums;//定义一个整型栈，用来存数字
+        stack<string>zf;//定义一个字符串栈，用来存字母
+        int sum=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]>='0'&&s[i]<='9')
+            {
+                sum=sum*10+s[i]-'0';
+            }
+            else if((s[i]>='a'&&s[i]<='z')||(s[i]>'A'&&s[i]<'Z'))
+            {
+                s1=s1+s[i];
+            }
+            else if(s[i]=='[')
+            {
+                nums.push(sum);
+                sum=0;
+                zf.push(s1);
+                s1="";
+            }
+            else //遇到‘]’时，操作与之相配的‘[’之间的字符
+            {
+                int times=nums.top();
+                nums.pop();
+                for(int j=0;j<times;j++)
+                zf.top()+=s1;
+                s1=zf.top();
+                zf.pop();
+            }
+        }
+        return s1;
+    }
+};

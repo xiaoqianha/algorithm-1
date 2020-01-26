@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool dfs(vector<int>&nums,vector<bool>&ans,int i,int a,int sum)
+    {
+        ans[i]=true;
+        sum+=nums[i];
+        if(sum==a)return true;
+        for(int j=i-1;j>=0;j--)
+        {
+            if(!ans[j]&&nums[j]+sum<=a)
+            {
+                if(dfs(nums,ans,j,a,sum))
+                return true;
+                ans[j]=false;
+            }
+        }
+        return false;
+    }
+    bool makesquare(vector<int>& nums) {
+        if(nums.size()<4)return false;
+        sort(nums.begin(),nums.end());
+        vector<bool>ans(nums.size(),false);
+        int a=0,i=nums.size()-1;
+        for(int sum:nums)
+        a+=sum;
+        if(a%4!=0)return false;
+        a/=4;
+        if(nums.back()>a)
+        return false;
+        for(int j=0;j<4;j++)
+        {
+            while(ans[i])i--;
+            if(!dfs(nums,ans,i,a,0))
+            return false;
+        }
+        return true;
+    }
+};
