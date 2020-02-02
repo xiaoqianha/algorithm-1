@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string>str;
+        dg(str,0,0,"",n);
+        return str;
+    }
+    void dg(vector<string>&str,int left,int right,string a,int n)
+    {
+        if(left==right&&left+right==2*n)
+        {
+            str.push_back(a);
+            return ;
+        }
+        if(left>=1&&left-right>0)//如果左括号大于右括号，加上右括号，然后递归
+        {
+            dg(str,left,right+1,a+")",n);
+        }
+        if(left<n)//如果左括号小于n，加上左括号，然后递归
+        {
+            dg(str,left+1,right,a+"(",n);
+        }
+    }
+};

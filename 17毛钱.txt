@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<string>a;
+    string b;
+    vector<string>table{"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    void dfs(int x,string digits)
+    {
+        int n=digits.size();
+        if(x==n)
+        {
+            a.push_back(b);
+            return ;
+        }
+        for(int i=0;i<table[digits[x]-'2'].size();i++)
+        {
+            b.push_back(table[digits[x]-'2'][i]);
+            dfs(x+1,digits);
+            b.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        if(digits=="")return a;
+        dfs(0,digits);
+        return a;
+    }
+};

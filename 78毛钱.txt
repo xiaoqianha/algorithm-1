@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>a;
+        vector<int>tmp;
+        huisu(a,tmp,nums,0);
+        return a;
+    }
+    void huisu(vector<vector<int>>&a,vector<int>&tmp,vector<int>&nums,int x)
+    {
+        if(tmp.size()<=nums.size())
+        {
+            a.push_back(tmp);
+        }
+        for(int i=x;i<nums.size();i++)
+        {
+            tmp.push_back(nums[i]);
+            huisu(a,tmp,nums,i+1);
+            tmp.pop_back();
+        }
+    }
+};

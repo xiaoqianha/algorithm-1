@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    void huisu(vector<int>nums,int x,int n)
+    {
+        if(x==n)
+        {
+            ans.push_back(nums);
+            return ;
+        }
+        for(int i=x;i<=n;i++)
+        {
+            swap(nums[i],nums[x]);
+            huisu(nums,x+1,n);
+            swap(nums[i],nums[x]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        huisu(nums,0,nums.size()-1);
+        return ans;
+    }
+};
