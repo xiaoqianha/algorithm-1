@@ -1,0 +1,62 @@
+#include<cstdio>
+#include<iostream>
+#include<cstring>
+#include<cmath>
+#include<sstream>
+using namespace std;
+long long num[310000];
+int main()
+{
+	int k,m;
+	cin>>k>>m;
+	num[1]=1;
+	int s1=1,t1=1;
+	for(int i=2;i<=k;i++)
+	{
+		int x=2*num[s1]+1;
+		int y=4*num[t1]+5;
+		if(x<y)
+		{
+			num[i]=x;
+			s1++;
+		}
+		else if(x==y)
+		{
+			num[i]=x;
+			s1++,t1++;
+		}
+		else
+		{
+			num[i]=y;
+			t1++;
+		}
+	}
+	for(int i=1;i<=k;i++)
+	cout<<num[i];
+    cout<<endl;
+    string s="";
+    //百度来的数字转字符串
+    for(int i=1;i<=k;i++){
+        stringstream ss;
+        ss<<num[i];
+        string str;
+        ss>>str;
+        s+=str;
+    }
+ 	string::iterator it=s.begin();
+ 	s.insert(it,'9');
+ 	int r=0,n=s.size(),h=1,sum=0;
+ 	while(h<=n&&sum!=m)
+ 	{
+ 		if(s[h]<=s[r])
+ 		{
+ 			s[++r]=s[h++];
+		 }
+		 else
+		 r--,sum++;
+	 }
+	 while(h<=n)s[++r]=s[h++];
+	 for(int i=1;i<n-m;i++)
+	 cout<<s[i];
+	return 0;
+}
