@@ -1,0 +1,36 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+int a[10001],b[10001],c[10001];
+char a1[10001],b1[10001];
+int main()
+{
+	int m;
+	memset(a,0,sizeof(a));
+	memset(b,0,sizeof(b));
+	cin>>a1>>b1;
+	int lena=strlen(a1),lenb=strlen(b1);
+	for(int i=0;i<lena;i++)
+	{
+		a[lena-i-1]=a1[i]-48;
+	}
+	for(int i=0;i<lenb;i++)
+	{
+		b[lenb-i-1]=b1[i]-48;
+	}
+	m=lena>lenb?lena:lenb;
+	for(int i=0;i<m;i++)
+	{
+		c[i]+=a[i]+b[i];
+		if(c[i]>9)
+		{
+			c[i+1]+=c[i]/10;
+			c[i]=c[i]%10;
+		}
+	}
+	while(c[m]==0&&m>=1)
+	m--;
+	for(int i=m;i>=0;i--)
+	cout<<c[i];
+	return 0;
+}
